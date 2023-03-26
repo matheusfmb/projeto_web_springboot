@@ -1,5 +1,5 @@
 <h3>Projeto Web</h3>
-<h3>Projeto simples feito para consolidar aprendizagem. integração de front + back end com API java/springboot.</h2>
+<h3>Projeto feito para consolidar aprendizagem. integração de front + back end com API java/springboot.</h2>
 
 <h2 align="center">Tecnologias Utilizadas</h2>
 <p align="center">
