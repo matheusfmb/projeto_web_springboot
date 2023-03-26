@@ -1,19 +1,17 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const button = document.getElementById('button');
-    const nome = document.getElementById('nome')
-    const email = document.getElementById('email')
-    const senha = document.getElementById('senha')
-    const telefone = document.getElementById('telefone')
+window.onload = function() {
+    const buttoncadastro = document.getElementById('buttoncadastro');
+    const nome = document.getElementById('nome');
+    const email = document.getElementById('email');
+    const senha = document.getElementById('senha');
+    const telefone = document.getElementById('telefone');
 
-    button.addEventListener('click', function(event) {
+    buttoncadastro.addEventListener('click', function(event) {
         event.preventDefault(); 
-        const form = document.getElementById('form');
-        if (form.checkValidity()) {
-            cadastrar();
-            limpar();
-        } else {
-            alert("Por favor, preencha todos os campos corretamente.");
-        }
+        cadastrar();
+        nome.value = "";
+        senha.value = "";
+        email.value ="";
+        telefone.value ="";
     });
 
     function cadastrar(){
@@ -31,19 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 telefone: telefone.value
             })
         })
-        .then(function(res) {
-        console.log(res);
-        })
-        .catch(function(res) {
-        console.log(res);
-        })
+        .then(response => {
+            if(response.status === 201) {
+              alert('Usuário Cadastrado com sucesso! API responde com 201.');
+            } else {
+              alert('Ocorreu um erro ao cadastrar o usuário.');
+            }
+          })
+          .catch(error => {
+            console.error('Ocorreu um erro:', error);
+          });
     };
-        
-    function limpar(){
-        nome.value = "";
-        senha.value = "";
-        email.value ="";
-        telefone.value ="";
-    }
-});
-
+};

@@ -2,7 +2,6 @@ package br.com.projetoweb.projeto.controller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,37 +18,51 @@ import br.com.projetoweb.projeto.DAO.UsuarioRepository;
 import br.com.projetoweb.projeto.model.Usuario;
 
 @RestController
-@CrossOrigin
-@RequestMapping("/usuarios")
+@CrossOrigin(origins = "*")
 public class UsuarioController{
+	
 	@Autowired
 	private UsuarioRepository dao;
+
 	
-	@GetMapping
-	public List<Usuario> listaUsuarios(){
-		return (List<Usuario>) dao.findAll();		
+	@GetMapping("/usuarios")
+	public ResponseEntity <List<Usuario>> listaUsuarios(){
+		List<Usuario> lista = (List<Usuario>) dao.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(lista);
 	}
 	
-	@PostMapping
-	public Usuario criarUsuario(@RequestBody Usuario usuario) {
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestBody Usuario usuario) {
+	    Optional<Usuario> usuarioAutenticado = dao.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
+	    if (!usuarioAutenticado.isPresent()) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorretos");
+	    } else {
+	        return ResponseEntity.ok("Login bem-sucedido");
+	    }
+	}
+	
+	@PostMapping("/usuarios")
+	public ResponseEntity <Usuario> criarUsuario(@RequestBody Usuario usuario) {
 		Usuario usuarioNovo = dao.save(usuario);
-		return usuarioNovo;
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioNovo);
 	}
 	
-	@PutMapping 
-	public Usuario EditarUsuario (@RequestBody Usuario usuario) {
+	@PutMapping("/usuarios")
+	public ResponseEntity<Usuario> EditarUsuario (@RequestBody Usuario usuario) {
 		Usuario usuarioEditado = dao.save(usuario);
-		return usuarioEditado;
+		return ResponseEntity.status(HttpStatus.OK).body(usuarioEditado);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> excluirUsuario(@PathVariable Integer id) {
+	public ResponseEntity<?> excluirUsuario(@PathVariable Integer id) {
 	    Optional<Usuario> usuarioExcluido = dao.findById(id);
 	    if (usuarioExcluido.isPresent()) {
 	        dao.deleteById(id);
-	        return ResponseEntity.ok("Usuário excluído com sucesso.");
-	    } else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
+	        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	        } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	    }
 	}
+	
+	
 }
