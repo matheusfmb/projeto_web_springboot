@@ -7,7 +7,7 @@
 <h2 align="center">Tecnologias Utilizadas</h2>
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=js,html,css,spring,java,eclipse,vscode" />
+    <img src="https://skillicons.dev/icons?i=js,html,css,spring,java,postman,eclipse,vscode" />
   </a>
 </p>
 
