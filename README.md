@@ -1,5 +1,5 @@
 <h3>Projeto Web</h3>
-<h3>Projeto feito para consolidar aprendizagem. integração de front + back end com API java/springboot.</h3>
+<h3>Projeto feito para consolidar aprendizagem. integração de front + back end com API java/springboot e banco de dados MySQL.</h3>
 <h4>Atualmente com funções de cadastro e Login de usuário, mas sem recursos de segurança</h4>
 
 
