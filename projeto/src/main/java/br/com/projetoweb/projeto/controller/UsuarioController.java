@@ -1,10 +1,10 @@
 package br.com.projetoweb.projeto.controller;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.projetoweb.projeto.model.Usuario;
-import br.com.projetoweb.projeto.repository.UsuarioRepository;
 import br.com.projetoweb.projeto.service.UsuarioService;
 
 @RestController
@@ -23,10 +21,9 @@ import br.com.projetoweb.projeto.service.UsuarioService;
 public class UsuarioController{
 	
 	@Autowired
-	private UsuarioRepository dao;
-	
-	@Autowired
 	private UsuarioService usuarioService;
+	@Autowired
+	public PasswordEncoder passwordEncoder;
 
 	
 	@GetMapping("/usuarios")
@@ -34,16 +31,17 @@ public class UsuarioController{
 		return ResponseEntity.status(200).body(usuarioService.listarUsuario());
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Usuario usuario) {
-	    Optional<Usuario> usuarioAutenticado = dao.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
-	    if (!usuarioAutenticado.isPresent()) {
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha incorretos");
-	    } else {
-	        return ResponseEntity.status(HttpStatus.OK).body(usuarioAutenticado);
+	 @PostMapping("/login")
+	 public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
+	     ResponseEntity<?> response;
+	     try {	    	 	 
+	         response = usuarioService.loginUsuario(usuario);
+	         } catch (Exception e) {
+	        	 response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar login");
+	        }
+	        return response;
 	    }
-	}
-	
+
 	@PostMapping("/usuarios")
 	public ResponseEntity <Usuario> criarUsuario(@RequestBody Usuario usuario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuario));

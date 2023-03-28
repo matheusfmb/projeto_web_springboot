@@ -31,7 +31,7 @@ window.onload = function() {
         })
         .then(response => {
             if(response.status === 201) {
-              alert('Usuário Cadastrado com sucesso! API responde com 201.');
+              alert('Usuário Cadastrado com sucesso!');
             } else {
               alert('Ocorreu um erro ao cadastrar o usuário.');
             }
@@ -40,4 +40,27 @@ window.onload = function() {
             console.error('Ocorreu um erro:', error);
           });
     };
+
+    Inputmask({
+      mask: '(99) 9999-9999',
+      greedy: false,
+      definitions: {
+        '#': {
+          validator: "[0-9]",
+          cardinality: 1
+        }
+      }
+    }).mask(telefone);
+
+    Inputmask({
+      mask: '*{1,50}',
+      greedy: false,
+      placeholder: '',
+      definitions: {
+        '*': {
+          validator: "[A-Za-zÀ-ÿ ]",
+          cardinality: 1
+        }
+      }
+    }).mask(nome);
 };
