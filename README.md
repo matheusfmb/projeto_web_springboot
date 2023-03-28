@@ -1,5 +1,6 @@
 <h3>Projeto Web</h3>
 <h3>Projeto feito para consolidar aprendizagem. integração de front + back end com API java/springboot e banco de dados MySQL.</h3>
+<h4> Lembrando que o Foco não é o Front-End 😅.
 <h4>Atualmente com funções de cadastro e Login de usuário, estou implementando melhorias de código, principalmente melhorias de segurança enquanto aprendo sobre o Spring Security</h4>
 
 
