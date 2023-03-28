@@ -1,4 +1,4 @@
-package br.com.projetoweb.projeto.DAO;
+package br.com.projetoweb.projeto.repository;
 
 import java.util.Optional;
 
