@@ -26,8 +26,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 
 
@@ -48,23 +46,23 @@ public class UsuarioController{
 	}
 	
 	
-	 @PostMapping("/login")
-	 @Operation(summary = "Realiza o login de um usuário")
-	 @ApiResponses(value = {
-			 @ApiResponse(responseCode = "200", description ="Usuário autenticado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Usuario.class))),
-			 @ApiResponse(responseCode = "401", description ="Usuário Não autorizado"),
-			 @ApiResponse(responseCode = "404", description ="Usuário não Encontrado"),
-			 @ApiResponse(responseCode = "500", description ="Server Error")
-	 })
-	 public ResponseEntity<?> loginUsuario(@Valid @RequestBody Usuario usuario) {
-	     ResponseEntity<?> response;
-	     try {	    	 	 
-	         response = usuarioService.loginUsuario(usuario);
-	         } catch (Exception e) {
-	        	 response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("INTERNAL_SEVER_ERROR");
-	        }
-	        return response;
-	    }
+	@PostMapping("/login")
+	@Operation(summary = "Realiza o login de um usuário")
+	@ApiResponses(value = {
+	  @ApiResponse(responseCode = "200", description ="Usuário autenticado com sucesso"),
+	  @ApiResponse(responseCode = "401", description ="Usuário Não autorizado"),
+	  @ApiResponse(responseCode = "404", description ="Usuário não Encontrado"),
+	  @ApiResponse(responseCode = "500", description ="Server Error")
+	})
+	public ResponseEntity<?> loginUsuario(@Valid @RequestBody Map<String, String> loginInfo) {
+	  ResponseEntity<?> response;
+	  try {          
+	    response = usuarioService.loginUsuario(loginInfo);
+	  } catch (Exception e) {
+	    response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("INTERNAL_SEVER_ERROR");
+	  }
+	  return response;
+	}
 	
 	@PostMapping("/usuarios")
 	@Operation(summary = "Cadastra novo Usuário no Banco de dados")
@@ -93,7 +91,6 @@ public class UsuarioController{
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex){
 		Map<String, String> errors = new HashMap<>();
-		
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
 			String fieldName = ((FieldError) error).getField();
 			String errorMessage = error.getDefaultMessage();

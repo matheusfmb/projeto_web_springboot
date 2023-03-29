@@ -1,6 +1,7 @@
 package br.com.projetoweb.projeto.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,18 +46,20 @@ public class UsuarioService {
 		return true;
 		
 	}
-	public ResponseEntity<?> loginUsuario(Usuario usuario) {
-		Optional<Usuario> loginUsuario = repository.findByEmail(usuario.getEmail());
+	
+	public ResponseEntity<?> loginUsuario(Map<String, String> loginInfo) {	
+		String email = loginInfo.get("email");
+		String senha = loginInfo.get("senha");
+		Optional<Usuario> loginUsuario = repository.findByEmail(email);
 		if (loginUsuario.isPresent()) {
-			if (passwordEncoder.matches(usuario.getSenha(), loginUsuario.get().getSenha())){
-				return ResponseEntity.status(HttpStatus.OK).body(loginUsuario);
-			}else {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
-			}
-		}else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+		    if (passwordEncoder.matches(senha, loginUsuario.get().getSenha())) {
+		    	return ResponseEntity.status(HttpStatus.OK).body(loginUsuario);
+		    	} else {
+		    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
+		    		}
+		 }else{
+		    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
+		  }
 		}
-		
-	}
 	
 }

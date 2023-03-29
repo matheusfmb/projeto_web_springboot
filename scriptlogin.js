@@ -33,25 +33,25 @@ window.onload = function() {
         })
         .then(response => {
             if(response.status === 200) {
-              alert('Usuário Cadastrado com sucesso!');
+              window.location.href="home.html";
             } else if (response.status === 400) {
               response.json().then(data => {
-                  if (data.email) {
-                    alert(data.email);
-                } else if (data.senha) {
+                if (data.senha, data.email) {
+                   alert(data.senha, data.email);
+                } else if (data.email) {
+                   alert(data.email);
+                } else if (data.senha){
                     alert(data.senha)
-                } else {
-                    alert('Erro ao processar a requisição');
                 }
               });
-            } else if (response.status === 401) {
-                alert('Usuário ou senha incorretos');
-            } else {
-                alert("Erro ao processar requesição");
+            } else if(response.status === 401) {
+              alert('Login ou senha incorretos');
+            } else{
+                alert("Server Error");
             }
           })
-        .catch(error => {
-        console.error(error.message);
-        });
+          .catch(error => {
+              console.error('Ocorreu um erro:', error);
+          });
     };
 };

@@ -18,21 +18,21 @@ public class Usuario {
 	@Column(name = "id")
 	private Integer id;
 	
-	@NotBlank(message ="Nome é obrigatório!")
-	@Size(min = 3, message ="O nome deve ter no mínimo 3 caracteres")
+	@NotBlank(message ="Campo nome vazio! essa mensagem veio do Back-END")
+	@Size(min = 3, message ="O nome deve ter no mínimo 3 caracteres.  essa mensagem veio do Back-END!")
 	@Column(name = "nome", length = 200, nullable = false)
 	private String nome;
 	
-	@Email(message ="Email inválido")
-	@NotBlank(message ="Campo email vazio")
+	@Email(message ="Email inválido.  essa mensagem veio do Back-END")
+	@NotBlank(message ="Campo email vazio!  essa mensagem veio do Back-END")
 	@Column(name = "email", length = 100, nullable = false)
 	private String email;
 	
-	@NotBlank(message ="telefone é obrigatório!")
+	@NotBlank(message ="Campo telefone vazio! essa mensagem veio do Back-END!")
 	@Column(name = "telefone", length = 15, nullable = false)
 	private String telefone;
 	
-	@NotBlank(message ="Senha é obrigatório!")
+	@NotBlank(message ="Campo senha vazio!  essa mensagem veio do Back-END!")
 	@Column(name = "senha", length = 45, nullable = false)
 	private String senha;
 	
