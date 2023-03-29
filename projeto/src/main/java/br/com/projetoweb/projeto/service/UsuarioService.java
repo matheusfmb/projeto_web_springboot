@@ -54,7 +54,7 @@ public class UsuarioService {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
 			}
 		}else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
 		}
 		
 	}
