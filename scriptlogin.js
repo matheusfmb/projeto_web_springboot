@@ -5,9 +5,17 @@ window.onload = function() {
 
     buttonlogin.addEventListener('click', function(event) {
         event.preventDefault(); 
-        login();
-        emaillogin.value="";
-        senhalogin.value="";
+        if (emaillogin.value === ("") && senhalogin.value ===("")){
+            alert("Campo email e Senha Vazios! validação vinda do front-End");
+        }else if (senhalogin.value ===("")){
+            alert("Campo senha Vazio! validação vinda do front-End");
+        }else if (emaillogin.value ===("")){
+            alert ("Campo email Vazio! validação vinda do front-End");
+        }else{
+            login();
+            emaillogin.value="";
+            senhalogin.value="";
+        }
     });
 
     function login(){
@@ -24,14 +32,24 @@ window.onload = function() {
             })
         })
         .then(response => {
-            if (response.status === 200) {
-                console.log('Login bem-sucedido');
-                window.location.href="home.html";
+            if(response.status === 200) {
+              alert('Usuário Cadastrado com sucesso!');
+            } else if (response.status === 400) {
+              response.json().then(data => {
+                  if (data.email) {
+                    alert(data.email);
+                } else if (data.senha) {
+                    alert(data.senha)
+                } else {
+                    alert('Erro ao processar a requisição');
+                }
+              });
+            } else if (response.status === 401) {
+                alert('Usuário ou senha incorretos');
             } else {
-                alert("Usuário ou Senha incorretos")
-                throw new Error(response.statusText);
+                alert("Erro ao processar requesição");
             }
-        })
+          })
         .catch(error => {
         console.error(error.message);
         });

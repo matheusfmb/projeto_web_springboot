@@ -99,7 +99,6 @@ public class UsuarioController{
 			String errorMessage = error.getDefaultMessage();
 			errors.put(fieldName,errorMessage);
 			errors.put(fieldName,errorMessage);
-			
 			});
 		return errors;
 		
