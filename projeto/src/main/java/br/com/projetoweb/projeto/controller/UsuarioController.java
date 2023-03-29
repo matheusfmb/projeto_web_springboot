@@ -1,24 +1,31 @@
 package br.com.projetoweb.projeto.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.projetoweb.projeto.model.Usuario;
 import br.com.projetoweb.projeto.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -49,7 +56,7 @@ public class UsuarioController{
 			 @ApiResponse(responseCode = "404", description ="Usuário não Encontrado"),
 			 @ApiResponse(responseCode = "500", description ="Server Error")
 	 })
-	 public ResponseEntity<?> loginUsuario(@RequestBody Usuario usuario) {
+	 public ResponseEntity<?> loginUsuario(@Valid @RequestBody Usuario usuario) {
 	     ResponseEntity<?> response;
 	     try {	    	 	 
 	         response = usuarioService.loginUsuario(usuario);
@@ -61,7 +68,7 @@ public class UsuarioController{
 	
 	@PostMapping("/usuarios")
 	@Operation(summary = "Cadastra novo Usuário no Banco de dados")
-	public ResponseEntity <Usuario> criarUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity <Usuario> criarUsuario(@Valid @RequestBody Usuario usuario) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuario));
 	}
 	
@@ -69,7 +76,7 @@ public class UsuarioController{
 
 	@PutMapping("/usuarios")
 	@Operation(summary = "Edita o cadastro do usuário")
-	public ResponseEntity<Usuario> EditarUsuario (@RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> EditarUsuario (@Valid @RequestBody Usuario usuario) {
 		return ResponseEntity.status(200).body(usuarioService.editarUsuario(usuario));
 	}
 	
@@ -80,6 +87,22 @@ public class UsuarioController{
 	public ResponseEntity<?> excluirUsuario(@PathVariable Integer id) {
 	    usuarioService.deletarUsuario(id);
 	    return ResponseEntity.status(204).build();	
+	}
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex){
+		Map<String, String> errors = new HashMap<>();
+		
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName,errorMessage);
+			errors.put(fieldName,errorMessage);
+			
+			});
+		return errors;
+		
 	}
 	
 

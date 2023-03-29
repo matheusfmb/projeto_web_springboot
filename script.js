@@ -15,32 +15,45 @@ window.onload = function() {
     });
 
     function cadastrar(){
-        fetch("http://localhost:8050/usuarios", 
-        {
-            headers: {
-                'Accept': 'application/json',
-                'content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-                nome: nome.value,
-                email: email.value,
-                senha: senha.value,
-                telefone: telefone.value
-            })
-        })
-        .then(response => {
-            if(response.status === 201) {
-              alert('Usuário Cadastrado com sucesso!');
-            } else {
-              alert('Ocorreu um erro ao cadastrar o usuário.');
-            }
+      fetch("http://localhost:8050/usuarios", 
+      {
+          headers: {
+              'Accept': 'application/json',
+              'content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({
+              nome: nome.value,
+              email: email.value,
+              senha: senha.value,
+              telefone: telefone.value
           })
-          .catch(error => {
-            console.error('Ocorreu um erro:', error);
+      })
+      .then(response => {
+        if(response.status === 201) {
+          alert('Usuário Cadastrado com sucesso!');
+        } else if (response.status === 400) {
+          response.json().then(data => {
+            if (data.nome) {
+              alert(data.nome);
+            } else if (data.email) {
+              alert(data.email);
+            } else if (data.senha) {
+              alert(data.senha);
+            } else if (data.telefone) {
+              alert(data.telefone);
+            } else {
+              alert('Erro ao processar a requisição');
+            }
           });
-    };
-
+        } else {
+          alert('Erro ao processar a requisição');
+        }
+      })
+      .catch(error => {
+          console.error('Ocorreu um erro:', error);
+      });
+  };
     Inputmask({
       mask: '(99) 9999-9999',
       greedy: false,

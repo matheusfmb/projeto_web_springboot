@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 
-//Anotação para desatiar o bloqueio dos endpoints - trocar depois
+//Anotação para desativar o bloqueio dos endpoints - trocar depois
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class ProjetoApplication {
 
