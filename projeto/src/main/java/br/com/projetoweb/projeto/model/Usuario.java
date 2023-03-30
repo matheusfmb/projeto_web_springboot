@@ -33,7 +33,7 @@ public class Usuario {
 	private String telefone;
 	
 	@NotBlank(message ="Campo senha vazio!  essa mensagem veio do Back-END!")
-	@Column(name = "senha", length = 45, nullable = false)
+	@Column(name = "senha", length = 100, nullable = false)
 	private String senha;
 	
 	

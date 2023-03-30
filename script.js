@@ -15,7 +15,7 @@ window.onload = function() {
     });
 
     function cadastrar(){
-      fetch("http://localhost:8050/usuarios", 
+      fetch("projetowebspringboot-production.up.railway.app/usuarios", 
       {
           headers: {
               'Accept': 'application/json',

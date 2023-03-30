@@ -19,7 +19,7 @@ window.onload = function() {
     });
 
     function login(){
-        fetch("http://localhost:8050/login", 
+        fetch("projetowebspringboot-production.up.railway.app/login", 
         {
             headers: {
             'Accept': 'application/json',
