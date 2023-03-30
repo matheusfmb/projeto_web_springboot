@@ -1,0 +1,34 @@
+# Nome da aplicação (substitua com o nome da sua aplicação)
+name: minha-aplicacao
+
+# Versão da linguagem (substitua com a versão do Java que você está usando)
+language: java
+version: 17
+
+# Comandos para implantar e executar a aplicação
+build:
+  # Comando para construir a aplicação (substitua com o comando que você usa localmente para construir a aplicação)
+  - ./mvnw clean install
+
+# Comandos para executar a aplicação
+start:
+  # Comando para iniciar a aplicação (substitua com o comando que você usa localmente para iniciar a aplicação)
+  - java -jar target/ProjetoApplication.jar
+
+# Adicione aqui as variáveis de ambiente da sua aplicação
+env:
+  # Variáveis de ambiente para conectar ao banco de dados MySQL
+  SPRING_DATASOURCE_URL: ${{ secrets.MYSQL_DATABASE_URL }}
+  SPRING_DATASOURCE_USERNAME: ${{ secrets.MYSQL_DATABASE_USERNAME }}
+  SPRING_DATASOURCE_PASSWORD: ${{ secrets.MYSQL_DATABASE_PASSWORD }}
+
+# Adicione aqui as portas que sua aplicação usa
+ports:
+  # Porta usada pela sua aplicação
+  - 8080
+
+# Adicione aqui os serviços adicionais que sua aplicação usa
+services:
+  # Adicione aqui o serviço MySQL para o banco de dados
+  - name: mysql
+    plan: mysql
