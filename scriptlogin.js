@@ -19,7 +19,7 @@ window.onload = function() {
     });
 
     function login(){
-        fetch("/login", 
+        fetch("http://localhost:8050/login", 
         {
             headers: {
             'Accept': 'application/json',

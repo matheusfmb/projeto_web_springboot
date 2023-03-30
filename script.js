@@ -15,7 +15,7 @@ window.onload = function() {
     });
 
     function cadastrar(){
-      fetch("/usuarios", 
+      fetch("http://localhost:8050/login", 
       {
           headers: {
               'Accept': 'application/json',
