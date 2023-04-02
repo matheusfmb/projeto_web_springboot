@@ -54,7 +54,7 @@ public class UsuarioController{
 	  @ApiResponse(responseCode = "404", description ="Usuário não Encontrado"),
 	  @ApiResponse(responseCode = "500", description ="Server Error")
 	})
-	public ResponseEntity<?> loginUsuario(@Valid @RequestBody Map<String, String> loginInfo) {
+	public ResponseEntity<?> loginUsuario(@RequestBody Map<String, String> loginInfo) {
 	  ResponseEntity<?> response;
 	  try {          
 	    response = usuarioService.loginUsuario(loginInfo);
@@ -87,6 +87,8 @@ public class UsuarioController{
 	    return ResponseEntity.status(204).build();	
 	}
 	
+	
+	//Tratando 404 vindos do FRONT
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex){
