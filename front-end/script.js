@@ -42,9 +42,7 @@ window.onload = function() {
               alert(data.senha);
             } else if (data.telefone) {
               alert(data.telefone);
-            } else {
-              alert('Erro ao processar a requisição');
-            }
+            } 
           });
         } else {
           alert('Erro ao processar a requisição');
