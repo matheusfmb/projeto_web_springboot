@@ -41,7 +41,7 @@ public class UsuarioController{
 	}
 	
 	
-	@PostMapping("/login")
+	@PostMapping("/usuarios/login")
 	@Operation(summary = "Realiza o login de um usuário")
 	@ApiResponses(value = {
 	  @ApiResponse(responseCode = "200", description ="Usuário autenticado com sucesso"),

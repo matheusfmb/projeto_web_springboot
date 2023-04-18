@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import br.com.projetoweb.projeto.Security.TokenUtil;
 import br.com.projetoweb.projeto.model.Usuario;
 import br.com.projetoweb.projeto.repository.UsuarioRepository;
 
@@ -20,7 +22,10 @@ public class UsuarioService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
+	@Autowired
+	private TokenUtil tokenUtil;
+
 	
 	public List<Usuario> listarUsuario(){
 		List<Usuario> lista = repository.findAll();
@@ -50,16 +55,17 @@ public class UsuarioService {
 	public ResponseEntity<?> loginUsuario(Map<String, String> loginInfo) {	
 		String email = loginInfo.get("email");
 		String senha = loginInfo.get("senha");
-		Optional<Usuario> loginUsuario = repository.findByEmail(email);
+		Optional<Usuario> loginUsuario = repository.findByEmailAndSenha(email,senha);
 		if (loginUsuario.isPresent()) {
 		    if (passwordEncoder.matches(senha, loginUsuario.get().getSenha())) {
-		    	return ResponseEntity.status(HttpStatus.OK).body(loginUsuario);
-		    	} else {
-		    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
-		    		}
+				Usuario usuario = loginUsuario.get();
+				String token = TokenUtil.createToken(usuario.getEmail());
+				return ResponseEntity.ok().header("Authorization", "Bearer " + token).build();
+		    }else{
+		    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
+		    }
 		 }else{
 		    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado");
 		  }
 		}
-	
 }
