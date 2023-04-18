@@ -42,20 +42,20 @@ public class TokenUtil {
         return emissor.equals(EMISSOR);
      }
 
-     public static boolean isTokenValid(String token) {
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token);
-            String emissor = claims.getBody().getIssuer();
-            Date expiracao = claims.getBody().getExpiration();
-            Date agora = new Date(System.currentTimeMillis());
-            if (emissor.equals(EMISSOR) && expiracao.after(agora)) {
-                return true;
-            }
-        } catch (JwtException | IllegalArgumentException e) {
-            LOGGER.error("Token inválido: {}", e.getMessage());
-        }
-        return false;
+    //  public static boolean isTokenValid(String token) {
+    //     try {
+    //         Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token.replace(PREFIX, ""));
+    //         return true;
+    //     } catch (JwtException e) {
+    //         return false;
+    //     }
     }
+    
+    
+    
+    
+    
+
 }
 
 

@@ -60,7 +60,7 @@ public class UsuarioService {
 		    if (passwordEncoder.matches(senha, loginUsuario.get().getSenha())) {
 				Usuario usuario = loginUsuario.get();
 				String token = TokenUtil.createToken(usuario.getEmail());
-				return ResponseEntity.ok().header("Authorization", "Bearer " + token).build();
+				return ResponseEntity.ok().header("Authorization",token).build();
 		    }else{
 		    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
 		    }
