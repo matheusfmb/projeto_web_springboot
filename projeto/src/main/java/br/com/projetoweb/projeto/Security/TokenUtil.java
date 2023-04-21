@@ -1,18 +1,18 @@
 package br.com.projetoweb.projeto.Security;
 
+import java.util.Collections;
 import java.util.Date;
-import java.util.logging.Logger;
-
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class TokenUtil {
 
+    private static final String HEADER = "Authorization";
     private static final long EXPIRATION = 60*60*1000;
     private static final String EMISSOR = "Projeto_web_api";
     private static final String SECRET_KEY = "Wv4Ivz2R149!&$OqKZu5!64@vDu@Ihbg";
@@ -31,7 +31,7 @@ public class TokenUtil {
                 .signWith(signatureAlgorithm,secretKeyBytes)
                 .compact();
 
-        return PREFIX+token;
+        return PREFIX + token;
     }
 
     public static boolean isExpirationValid(Date expiration){
@@ -42,19 +42,30 @@ public class TokenUtil {
         return emissor.equals(EMISSOR);
      }
 
-    //  public static boolean isTokenValid(String token) {
-    //     try {
-    //         Jwts.parser().setSigningKey(SECRET_KEY.getBytes()).parseClaimsJws(token.replace(PREFIX, ""));
-    //         return true;
-    //     } catch (JwtException e) {
-    //         return false;
-    //     }
+    public static boolean isSubjectValid(String string){
+        return string != null && string.length() > 0;
     }
     
+  
+    public static org.springframework.security.core.Authentication validate(HttpServletRequest request) {
+        String token = request.getHeader(HEADER);
+        token = token.replace(PREFIX,"");
     
+        Claims claims = Jwts.parser()
+            .setSigningKey(SECRET_KEY.getBytes())
+            .parseClaimsJws(token)
+            .getBody();
     
+        String subject = claims.getSubject();
+        String issuer = claims.getIssuer();
+        Date expiration = claims.getExpiration();
     
+        if (isSubjectValid(subject) && isEmissorValid(issuer) && isExpirationValid(expiration)) {
+            return new UsernamePasswordAuthenticationToken(subject, null, Collections.emptyList());
+        }
     
+        return null;
+    }
 
 }
 

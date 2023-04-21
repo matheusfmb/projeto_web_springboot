@@ -1,40 +1,113 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">''
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/b88bdd215f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script src="./script.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+    crossorigin="anonymous">
+
     <title>Projeto WEB</title>
 </head>
+
 <body>
-    <header class="header">
-        <h2>Projeto de Integração Web com API Java/Springboot</h2>
-    </header>
-    <div class="box">
-        <h2>Cadastro</h2>
-        <form action="" id="formcadastro">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required>
-
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" required>
-
-            <label for="telefone">Telefone:</label>
-            <input type="tel" id="telefone" name="telefone" required> 
-
-            <input type="submit" id="buttoncadastro" value="Cadastrar">
-        </form>
-        <button id="buttonloginpage" onclick="window.location.href='login.html';">Login</button>
-    </div>
-    <footer>
-        <div class="footer">
+    <header id ="header_nav"class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+          <a href="https://github.com/matheusfmb/projeto_web_springboot" class="d-inline-flex link-body-emphasis text-decoration-none">
+            <i class="fa-brands fa-github" style="font-size: 50px; margin-left: 200px; color:#333333"></i>
+          </a>
         </div>
-    </footer>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="index.html" class="nav-link px-2 link-secondary"><i class="fa-solid fa-house" style="font-size: 40px; color:#0082ca"></i></a></li>
+        </ul>
+        <div class="col-md-3 text-end">
+          <button type="button" id="button-login-formulario" class="btn btn-primary" >Login</button>
+          <button type="button" id="button-cadastro-formulario" class="btn btn-primary">Cadastro</button>
+        </div>
+    </header>
+
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+   crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" 
+   integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+   crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" 
+   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+   crossorigin="anonymous"></script>
+
+  <div id="login-form" style="display: none;">
+      <h2>Login</h2>
+      <form action="" id="formlogin">
+            <label for="login">E-mail:</label>
+            <input type="email" id="emaillogin" name="email" required>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senhalogin" name="senha" required> 
+            <input type="submit" id="buttonlogin" value="Entrar">
+      </form>
+  </div>
+
+  <div id="cadastro-form" class="box" style="display: none;">
+      <h2>Cadastro</h2>
+      <form id="formcadastro">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" required>
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="senha">Senha:</label>
+          <input type="password" id="senha" name="senha" required>
+          <label for="telefone">Telefone:</label>
+          <input type="tel" id="telefone" name="telefone" required> 
+          <input type="submit" id="buttoncadastro" value="Cadastrar">
+      </form>
+  </div>
+
+  <div id="content" class="conteudo" style="display: block;" >
+    <h2>Projeto Web</h2>
+    <p>Projeto feito para consolidar aprendizagem. integração de front + back end com API java/springboot e banco de dados MySQL.</p>
+    <p>Seguindo os Padrões de projeto MVC.</p>
+    <p>Front-End feito com Bootstrap😅.</p>
+    <p>Atualmente com funções de cadastro e Login de usuário, estou implementando melhorias de código, principalmente melhorias de segurança enquanto aprendo sobre o Spring Security.</p>
+    <h2>Tecnologias Utilizadas</h2>
+    <div style="text-align: center;">
+      <img src="assets/icons8-java-48.png" alt="java-icon" >
+      <img src="assets/icons8-spring-boot-48.png" alt="spring-icon" >
+      <img src="assets/icons8-javascript-48.png" alt="javascript-icon" >
+      <img src="assets/icons8-html-5-48.png" alt="html-icon" >
+      <img src="assets/icons8-css3-48.png" alt="css-icon" >
+      <img src="assets/icons8-logo-mysql-48.png" alt="mysql-icon" >
+    </div>
+  </div>
+
+  <footer class="idxfooter">
+    <div class="bg-light text-center text-blue">
+      <div class="container p-4 pb-0">
+        <section class="mb-4">
+          <a class="btn text-white btn-floating m-1"
+            style="background-color: #0082ca;"
+            href="https://www.linkedin.com/in/matheus-barros-875402242/"
+            role="button"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+          <a class="btn text-white btn-floating m-1"
+            style="background-color: #333333;"
+            href="https://github.com/matheusfmb"
+            role="button"
+            ><i class="fab fa-github"></i
+          ></a>
+        </section>
+      </div>
+      <div class="text-center p-3" style="background-color: white;">
+        © 2023 Copyright: 😃 no Copyright
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

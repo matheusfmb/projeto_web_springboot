@@ -23,9 +23,6 @@ public class UsuarioService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private TokenUtil tokenUtil;
-
 	
 	public List<Usuario> listarUsuario(){
 		List<Usuario> lista = repository.findAll();
@@ -55,12 +52,11 @@ public class UsuarioService {
 	public ResponseEntity<?> loginUsuario(Map<String, String> loginInfo) {	
 		String email = loginInfo.get("email");
 		String senha = loginInfo.get("senha");
-		Optional<Usuario> loginUsuario = repository.findByEmailAndSenha(email,senha);
+		Optional<Usuario> loginUsuario = repository.findByEmail(email);
 		if (loginUsuario.isPresent()) {
 		    if (passwordEncoder.matches(senha, loginUsuario.get().getSenha())) {
-				Usuario usuario = loginUsuario.get();
-				String token = TokenUtil.createToken(usuario.getEmail());
-				return ResponseEntity.ok().header("Authorization",token).build();
+				String token = TokenUtil.createToken(loginUsuario.get().getEmail());
+				return ResponseEntity.ok().header("Authorization",token).body(loginUsuario);
 		    }else{
 		    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Senha incorreta");
 		    }
