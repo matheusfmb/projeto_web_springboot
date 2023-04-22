@@ -1,6 +1,7 @@
 package br.com.projetoweb.projeto.Security;
 
-public class Token {
+public class Token{
+
     private String token;
 
     public Token(String token){

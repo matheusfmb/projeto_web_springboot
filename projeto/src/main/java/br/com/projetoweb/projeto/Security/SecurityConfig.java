@@ -17,11 +17,9 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
         .csrf().disable()
-        .authorizeHttpRequests().requestMatchers(HttpMethod.GET,"/usuarios").permitAll().and()
         .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/usuarios").permitAll().and()
         .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
         .anyRequest().authenticated().and().cors();
-
         http.addFilterBefore(new SecurityFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

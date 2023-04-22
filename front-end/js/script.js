@@ -10,6 +10,11 @@ window.onload = function() {
     const telefone = document.getElementById('telefone');
 
 
+    document.getElementById('content-button').addEventListener('click', function() {
+      document.getElementById('content').style.display = 'block';
+      document.getElementById('cadastro-form').style.display='none';
+      document.getElementById('login-form').style.display = 'none';
+  });
     document.getElementById('button-login-formulario').addEventListener('click', function() {
         document.getElementById('content').style.display = 'none';
         document.getElementById('cadastro-form').style.display='none';

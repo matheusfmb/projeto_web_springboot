@@ -3,6 +3,8 @@ package br.com.projetoweb.projeto.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.projetoweb.projeto.dto.UsuarioCadastroDTO;
+import br.com.projetoweb.projeto.dto.UsuarioLoginDTO;
 import br.com.projetoweb.projeto.model.Usuario;
 import br.com.projetoweb.projeto.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,10 +54,10 @@ public class UsuarioController{
 	  @ApiResponse(responseCode = "404", description ="Usuário não Encontrado"),
 	  @ApiResponse(responseCode = "500", description ="Server Error")
 	})
-	public ResponseEntity<?> loginUsuario(@RequestBody Map<String, String> loginInfo) {
+	public ResponseEntity<?> loginUsuario(@Valid @RequestBody UsuarioLoginDTO usuario) {
 	  ResponseEntity<?> response;
 	  try {          
-	    response = usuarioService.loginUsuario(loginInfo);
+	    response = usuarioService.loginUsuario(usuario);
 	  } catch (Exception e) {
 	    response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("INTERNAL_SEVER_ERROR");
 	  }
@@ -61,8 +66,15 @@ public class UsuarioController{
 	
 	@PostMapping("/usuarios")
 	@Operation(summary = "Cadastra novo Usuário no Banco de dados")
-	public ResponseEntity <Usuario> criarUsuario(@Valid @RequestBody Usuario usuario) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.criarUsuario(usuario));
+	public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioCadastroDTO usuario) {
+		ResponseEntity<?> response;
+		try {
+			response = usuarioService.criarUsuario(usuario);
+		}catch (Exception e){
+			response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("INTERNAL_SERVER_ERROR");
+
+		}
+		return response;
 	}
 	
 	
@@ -98,5 +110,4 @@ public class UsuarioController{
 		
 	}
 	
-
 }

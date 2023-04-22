@@ -5,9 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuarios")
@@ -18,24 +15,30 @@ public class Usuario {
 	@Column(name = "id")
 	private Integer id;
 	
-	@NotBlank(message ="Campo nome vazio! essa mensagem veio do Back-END")
-	@Size(min = 3, message ="O nome deve ter no mínimo 3 caracteres.  essa mensagem veio do Back-END!")
 	@Column(name = "nome", length = 200, nullable = false)
 	private String nome;
 	
-	@Email(message ="Email inválido.  essa mensagem veio do Back-END")
-	@NotBlank(message ="Campo email vazio!  essa mensagem veio do Back-END")
 	@Column(name = "email", length = 100, nullable = false)
 	private String email;
 	
-	@NotBlank(message ="Campo telefone vazio! essa mensagem veio do Back-END!")
 	@Column(name = "telefone", length = 15, nullable = false)
 	private String telefone;
 	
-	@NotBlank(message ="Campo senha vazio!  essa mensagem veio do Back-END!")
 	@Column(name = "senha", length = 100, nullable = false)
 	private String senha;
 	
+	
+	public Usuario(String nome, String email, String telefone, String senha) {
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.senha = senha;
+	}
+
+	public Usuario() {
+		
+	}
+
 	
 	public Integer getId() {
 		return id;
