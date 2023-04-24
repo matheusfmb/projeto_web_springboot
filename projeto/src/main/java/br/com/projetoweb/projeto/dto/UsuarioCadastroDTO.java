@@ -56,6 +56,20 @@ public class UsuarioCadastroDTO {
         this.senha = senha;
     }
 
+    public UsuarioCadastroDTO(
+            @NotBlank(message = "Campo nome vazio! Validação vinda do BACK-END") @Size(min = 3, message = "O nome deve ter no mínimo 3 caracteres.") String nome,
+            @Email(message = "Email inválido.") @NotBlank(message = "Campo email vazio! Validação vinda do BACK-END") String email,
+            @NotBlank(message = "Campo telefone vazio! Validação vinda do BACK-END ") String telefone,
+            @NotBlank(message = "Campo senha vazio! Validação vinda do BACK-END") String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+    }
+
+    public UsuarioCadastroDTO() {
+    }
+
 
     
 }

@@ -16,6 +16,16 @@ public class UsuarioLoginDTO {
     @NotBlank(message ="Campo senha vazio!")
     private String senha;
 
+
+    public UsuarioLoginDTO() {
+    }
+
+    public UsuarioLoginDTO(@Email(message = "Email inválido.") @NotBlank(message = "Campo email vazio!") String email,
+            @NotBlank(message = "Campo senha vazio!") String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -1,8 +1,10 @@
 window.onload = function() {
+  // VARIÁVEIS DE LOGIN
     const buttonlogin = document.getElementById('buttonlogin');
     const emaillogin = document.getElementById('emaillogin');
     const senhalogin = document.getElementById('senhalogin');
 
+    // VARIÁVEIS DE CADASTRO
     const buttoncadastro = document.getElementById('buttoncadastro');
     const nome = document.getElementById('nome');
     const email = document.getElementById('email');
@@ -10,25 +12,28 @@ window.onload = function() {
     const telefone = document.getElementById('telefone');
 
 
+    // LISTENERS DA PÁGINA - CONTEUDO PRINCIPAL
     document.getElementById('content-button').addEventListener('click', function() {
       document.getElementById('content').style.display = 'block';
       document.getElementById('cadastro-form').style.display='none';
       document.getElementById('login-form').style.display = 'none';
-  });
+    });
+  
+    // LISTENER PARA APARECER O FORMULÁRIO DE LOGIN
     document.getElementById('button-login-formulario').addEventListener('click', function() {
         document.getElementById('content').style.display = 'none';
         document.getElementById('cadastro-form').style.display='none';
         document.getElementById('login-form').style.display = 'block';
     });
-   
-
+    
+    // LISTENER PARA APARECER O FORMULÁRIO DE CADASTRO
     document.getElementById('button-cadastro-formulario').addEventListener('click', function() {
         document.getElementById('content').style.display = 'none';
         document.getElementById('login-form').style.display = 'none';
-        document.getElementById('cadastro-form').style.display ="block";
-        
+        document.getElementById('cadastro-form').style.display ="block";  
     });
 
+    // BOTÃO DE EFETUAR CADASTRO 
     buttoncadastro.addEventListener('click', function(event) {
         event.preventDefault();
         cadastrar();
@@ -37,7 +42,8 @@ window.onload = function() {
         email.value ="";
         telefone.value ="";
     });
-
+    
+    // BOTÃO DE EFETUAR LOGIN
     buttonlogin.addEventListener('click', function(event) {
         event.preventDefault(); 
         if (emaillogin.value === ("") && senhalogin.value ===("")){
@@ -53,43 +59,59 @@ window.onload = function() {
         }
     });
 
-    function login(){
-        fetch("http://localhost:8050/usuarios/login", 
-        {
-            headers: {
-            'Accept': 'application/json',
-            'content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-                email: emaillogin.value,
-                senha: senhalogin.value
-            })
-        })
-        .then(response => {
-            if(response.status === 200) {
-              window.location.href="home.html";
-            } else if (response.status === 400) {
-              response.json().then(data => {
-                if (data.senha, data.email) {
-                   alert(data.senha, data.email);
-                } else if (data.email) {
-                   alert(data.email);
-                } else if (data.senha){
-                    alert(data.senha)
-                }
-              });
-            } else if(response.status === 401) {
-              alert('Login ou senha incorretos');
-            } else{
-                alert("Server Error");
-            }
+    // FUNÇÃO DE LOGIN
+    function login() {
+      localStorage.clear();
+      fetch("http://localhost:8050/usuarios/login", 
+      {
+          headers: {
+          'Accept': 'application/json',
+          'content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify({
+              email: emaillogin.value,
+              senha: senhalogin.value
           })
-          .catch(error => {
-              console.error('Ocorreu um erro:', error);
+      })
+      .then(response => {
+        if(response.status === 200) {
+          response.json().then(data => {
+            localStorage.setItem('user', JSON.stringify(data));
+            window.location.href="home.html";
           });
-    };
+        } else if (response.status === 400) {
+          response.text().then(data => {
+            if(data.email){
+              alert(data.email)
+            }else if(data.senha){
+              alert(data.senha)
+            }else{
+              alert(data.email,data.senha)
+            }
+          });
 
+        }else if (response.status === 401){
+          response.text().then(data => {
+            alert(data)
+          });
+
+        } else if(response.status === 404) {
+          response.json().then(data => {
+            console.log(data)
+          });
+        } else{
+          response.text().then(data => {
+            alert(data);
+          });   
+        }
+      })
+      .catch(error => {
+          console.error('Ocorreu um erro:', error);
+      });
+  };
+
+    // FUNÇÃO DE CADASTRO
     function cadastrar(){
       fetch("http://localhost:8050/usuarios", 
       {
@@ -107,7 +129,9 @@ window.onload = function() {
       })
       .then(response => {
         if(response.status === 201) {
-          alert('Usuário Cadastrado com sucesso!');
+          response.text().then(data => {
+            alert(data);
+          });
         } else if (response.status === 400) {
           response.json().then(data => {
             if (data.nome) {
@@ -120,15 +144,18 @@ window.onload = function() {
               alert(data.telefone);
             } 
           });
+        } else if (response.status === 409) {
+          response.text().then(data => {alert(data)});
         } else {
-          alert('Erro ao processar a requisição');
+          response.text().then(data => {alert(data)});
         }
       })
       .catch(error => {
           console.error('Ocorreu um erro:', error);
       });
   };
-  
+
+    // MASCARAS PARA O FORMULÁRIO DE CADASTRO
     Inputmask({
       mask: '(99) 9999-9999',
       greedy: false,
