@@ -17,7 +17,8 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
         .csrf().disable()
-        .authorizeHttpRequests().requestMatchers(HttpMethod.GET,"/swagger-ui/*","/v3/api-docs/*","/v3/api-docs","/swagger-ui.html","/api/usuarios").permitAll().and()
+        .authorizeHttpRequests().requestMatchers(HttpMethod.GET,"/swagger-ui/*","/v3/api-docs/*","/v3/api-docs","/swagger-ui.html").permitAll().and()
+        // .authorizeHttpRequests().requestMatchers(HttpMethod.DELETE,"/api/usuarios/{id}").permitAll().and()
         .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/usuarios").permitAll().and()
         .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
         .anyRequest().authenticated().and().cors();

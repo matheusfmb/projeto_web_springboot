@@ -75,9 +75,10 @@ window.onload = function() {
           })
       })
       .then(response => {
-        if(response.status === 200) {
+        if(response.ok) {
           response.json().then(data => {
             localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem('token', data.token);
             window.location.href="home.html";
           });
         } else if (response.status === 400) {
