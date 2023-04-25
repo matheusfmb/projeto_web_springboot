@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import br.com.projetoweb.projeto.dto.UsuarioCadastroDTO;
 import br.com.projetoweb.projeto.dto.UsuarioLoginDTO;
 import br.com.projetoweb.projeto.model.Usuario;
@@ -38,10 +41,13 @@ public class UsuarioController{
 	@Autowired
 	private UsuarioService usuarioService;
 	
-	@GetMapping("/usuarios")
+	@GetMapping("/api/usuarios")
 	@Operation(summary = "Retorna todos os usuário cadastrados")
-	public ResponseEntity <List<Usuario>> listaUsuarios(){
-		return ResponseEntity.status(200).body(usuarioService.listarUsuario());
+	public ModelAndView listarUsuarios(){
+		List<Usuario> usuarios = usuarioService.listarUsuario();
+		ModelAndView mv = new ModelAndView("usuarios");
+		mv.addObject("usuarios",usuarios);
+		return mv;
 	}
 	
 	
@@ -66,7 +72,7 @@ public class UsuarioController{
 	}
 	
 	@PostMapping("/usuarios")
-	@Operation(summary = "Cadastra um novo usuário", 
+	@Operation(summary = "Cadastra um novo usuário",
 	requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Objeto com os dados do usuário a ser cadastrado", 
 	required = true, content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)))
 	@ApiResponses(value = {

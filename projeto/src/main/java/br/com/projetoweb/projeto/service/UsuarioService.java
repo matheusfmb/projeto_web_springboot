@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import br.com.projetoweb.projeto.Security.Token;
 import br.com.projetoweb.projeto.Security.TokenUtil;
 import br.com.projetoweb.projeto.dto.UsuarioCadastroDTO;
