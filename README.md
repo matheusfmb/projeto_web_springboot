@@ -1,4 +1,4 @@
-<h3>Projeto Web</h3>
+<h1 align="center">Projeto Web</h1>
 <h3>Projeto de desenvolvimento web utilizando API back-end Java + Springboot e front-end com Bootstrap</h3>
 
 Neste projeto, desenvolvi uma aplicação web(CRUD) utilizando a tecnologia Java com Springboot para a criação de uma API Rest, e Bootstrap, HTML, CSS e JS para o front-end. O objetivo do projeto era criar um sistema web com interação de Back-end + Front-End
