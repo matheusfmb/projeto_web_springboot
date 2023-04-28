@@ -12,7 +12,7 @@ Entre as funcionalidades implementadas no projeto, destaca-se a possibilidade de
 Ao desenvolver este projeto, pude aprimorar minhas habilidades em Java e Springboot.
 
 
-<h2 align="center">Tecnologias Utilizadas</h2>
+<h1 align="center">Tecnologias Utilizadas</h1>
 <p align="center">
   <a href="https://skillicons.dev">
     <img src="https://skillicons.dev/icons?i=js,html,css,spring,java,postman,eclipse,vscode" />
