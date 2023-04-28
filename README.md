@@ -1,8 +1,15 @@
 <h3>Projeto Web</h3>
-<h3>Projeto feito para consolidar aprendizagem. integração de front + back end com API java/springboot e banco de dados MySQL.</h3>
-<h3>Seguindo os Padrões de projeto MVC.
-<h4> Lembrando que o Foco não é o Front-End 😅.
-<h4>Atualmente com funções de cadastro e Login de usuário, estou implementando melhorias de código, principalmente melhorias de segurança enquanto aprendo sobre o Spring Security</h4>
+<h3>Projeto de desenvolvimento web utilizando API back-end Java + Springboot e front-end com Bootstrap</h3>
+
+Neste projeto, desenvolvi uma aplicação web(CRUD) utilizando a tecnologia Java com Springboot para a criação de uma API Rest, e Bootstrap, HTML, CSS e JS para o front-end. O objetivo do projeto era criar um sistema web com interação de Back-end + Front-End
+
+Na API back-end, utilizei a linguagem Java juntamente com o framework Springboot para criar rotas e endpoints para o envio e recebimento de dados, JPA para a camada de Persistência, Autenticação JWT com Spring Security, Criei uma página template para ter contato com o framework Thymeleaf. Foi implementado um banco de dados relacional (MySQL) para armazenar as informações.
+
+Para a criação do front-end, utilizei a biblioteca Bootstrap + HTML/CSS e JS para criar uma interface para o usuário, para permitir uma navegação fluida entre as páginas.
+
+Entre as funcionalidades implementadas no projeto, destaca-se a possibilidade de realizar cadastro de usuários, login, Consulta, alteração e exclusão de dados.
+
+Ao desenvolver este projeto, pude aprimorar minhas habilidades em Java e Springboot.
 
 
 <h2 align="center">Tecnologias Utilizadas</h2>
