@@ -3,7 +3,7 @@
 
 Neste projeto, desenvolvi uma aplicação web(CRUD) utilizando a tecnologia Java com Springboot para a criação de uma API Rest, e Bootstrap, HTML, CSS e JS para o front-end. O objetivo do projeto era criar um sistema web com interação de Back-end + Front-End
 
-Na API back-end, utilizei a linguagem Java juntamente com o framework Springboot para criar rotas e endpoints para o envio e recebimento de dados, JPA para a camada de Persistência, Autenticação JWT com Spring Security, Criei uma página template para ter contato com o framework Thymeleaf. Foi implementado um banco de dados relacional (MySQL) para armazenar as informações.
+Na API back-end, utilizei a linguagem Java juntamente com o framework Springboot para criar rotas e endpoints para o envio e recebimento de dados, JPA para a camada de Persistência, Autenticação JWT com Spring Security, Criei uma página template para ter contato com o framework Thymeleaf. Foi implementado um banco de dados relacional (MySQL) para armazenar as informações e Swagger para documentação.
 
 Para a criação do front-end, utilizei a biblioteca Bootstrap + HTML/CSS e JS para criar uma interface para o usuário, para permitir uma navegação fluida entre as páginas.
 
