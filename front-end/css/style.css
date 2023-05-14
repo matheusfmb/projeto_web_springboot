@@ -1,11 +1,10 @@
 
 .idxfooter {
-    position: fixed;
+	position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
 }
-
 
 #login-form { 
 	max-width: 500px;
@@ -130,7 +129,7 @@
 	background-color: #fff;
 }
 
-.box input[type="submit"] {
+.box input[type="submit"], .buttonEdit {
     display: block;
 	margin: 0 auto;
     margin-top: 20px;
@@ -142,7 +141,7 @@
 	cursor: pointer;
 }
 
-.box input[type="submit"]:hover {
+.box input[type="submit"],.buttonEdit:hover {
 	background-color: #00569c;
 }
 

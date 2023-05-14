@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,24 +16,25 @@ import br.com.projetoweb.projeto.dto.UsuarioCadastroDTO;
 import br.com.projetoweb.projeto.dto.UsuarioLogadoDTO;
 import br.com.projetoweb.projeto.dto.UsuarioLoginDTO;
 import br.com.projetoweb.projeto.model.Usuario;
-import br.com.projetoweb.projeto.repository.UsuarioRepository;
+import br.com.projetoweb.projeto.repository.IUsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class UsuarioService {
 	
 	@Autowired
-	private UsuarioRepository repository;
+	private IUsuarioRepository repository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	
-	public List<Usuario> listarUsuario(){
-		List<Usuario> lista = repository.findAll();
-		return lista;
+	public List<Usuario> listarUsuarios(){
+		List<Usuario> listaUsuarios = repository.findAll();
+		return listaUsuarios;
 	}
 
-	public ResponseEntity<String> criarUsuario(UsuarioCadastroDTO usuarioDTO) {
+	public ResponseEntity<?> criarUsuario(UsuarioCadastroDTO usuarioDTO) {
 		Optional<Usuario> isUserAlreadyCreated = repository.findByEmail(usuarioDTO.getEmail());
 		if(isUserAlreadyCreated.isPresent()){
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Esse email ja foi cadastrado");
@@ -50,12 +50,37 @@ public class UsuarioService {
 			}
 		}
 	}
-	
-	public Usuario editarUsuario(Usuario usuario) {
-		String encoder = this.passwordEncoder.encode(usuario.getSenha());
-		usuario.setSenha(encoder);
-		Usuario usuarioEditado = repository.save(usuario);
-		return usuarioEditado;
+
+	// IMPLEMENTAR DEPOIS EDIÇÃO DE SENHA<--!-->
+	// public Usuario editarSenhaUsuario(UsuarioLogadoDTO usuario) {
+	// 	String encoder = this.passwordEncoder.encode(usuario.getSenha());
+	// 	usuario.setSenha(encoder);
+	// 	Usuario usuarioEditado = repository.save(usuario);
+	// 	return usuarioEditado;
+	// }
+
+	public ResponseEntity <?> editarDadosUsuario(UsuarioLogadoDTO usuario){
+		Usuario usuarioPersistido = repository.findById(usuario.getId()).orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+		UsuarioLogadoDTO usuarioResponse = new UsuarioLogadoDTO(usuarioPersistido.getId(), usuarioPersistido.getNome(), usuarioPersistido.getEmail(), usuarioPersistido.getTelefone());
+		
+		if (!usuarioPersistido.getEmail().equals(usuario.getEmail()) && !usuarioPersistido.getTelefone().equals(usuario.getTelefone())) {
+			usuarioPersistido.setTelefone(usuario.getTelefone());
+			usuarioPersistido.setEmail(usuario.getEmail());
+			usuarioResponse.setEmail(usuarioPersistido.getEmail());
+			usuarioResponse.setTelefone(usuarioPersistido.getTelefone());
+
+		}else if (!usuarioPersistido.getEmail().equals(usuario.getEmail())){
+			usuarioPersistido.setEmail(usuario.getEmail());
+			usuarioResponse.setEmail(usuarioPersistido.getEmail());
+
+		}else if (!usuarioPersistido.getTelefone().equals(usuario.getTelefone())){
+			usuarioPersistido.setTelefone(usuario.getTelefone());
+			usuarioResponse.setTelefone(usuarioPersistido.getTelefone());
+		}else {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		repository.save(usuarioPersistido);
+		return ResponseEntity.status(HttpStatus.OK).body(usuarioResponse);
 	}
 	
 	public ResponseEntity <?> deletarUsuario(Integer id) {
@@ -78,7 +103,7 @@ public class UsuarioService {
 					Token token = new Token(tokenAuth);
 					UsuarioLogadoDTO usuarioLogadoDTO = new UsuarioLogadoDTO(loginUsuario.get().getId(),loginUsuario.get().getEmail(),loginUsuario.get().getNome(),loginUsuario.get().getTelefone());
 					JSONObject responseJson = new JSONObject(usuarioLogadoDTO);
-					responseJson.put("token", tokenAuth);
+					responseJson.put("token", token.getToken());
 					String responseBody = responseJson.toString();
 					return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.AUTHORIZATION,token.getToken()).body(responseBody);
 			}else{

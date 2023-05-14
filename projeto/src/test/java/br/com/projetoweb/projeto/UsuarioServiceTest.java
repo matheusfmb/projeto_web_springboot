@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import br.com.projetoweb.projeto.dto.UsuarioCadastroDTO;
 import br.com.projetoweb.projeto.dto.UsuarioLoginDTO;
 import br.com.projetoweb.projeto.model.Usuario;
-import br.com.projetoweb.projeto.repository.UsuarioRepository;
+import br.com.projetoweb.projeto.repository.IUsuarioRepository;
 import br.com.projetoweb.projeto.service.UsuarioService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -24,7 +24,7 @@ public class UsuarioServiceTest {
     private UsuarioService usuarioService;
 
     @Autowired 
-    private UsuarioRepository repository;
+    private IUsuarioRepository repository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

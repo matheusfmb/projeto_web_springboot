@@ -62,7 +62,7 @@ window.onload = function() {
     // FUNÇÃO DE LOGIN
     function login() {
       localStorage.clear();
-      fetch("http://localhost:8050/usuarios/login", 
+      fetch("http://localhost:8050/api/usuarios/login", 
       {
           headers: {
           'Accept': 'application/json',
@@ -114,7 +114,7 @@ window.onload = function() {
 
     // FUNÇÃO DE CADASTRO
     function cadastrar(){
-      fetch("http://localhost:8050/usuarios", 
+      fetch("http://localhost:8050/api/usuarios", 
       {
           headers: {
               'Accept': 'application/json',

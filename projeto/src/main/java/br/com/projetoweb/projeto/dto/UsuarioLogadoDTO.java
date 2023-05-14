@@ -1,12 +1,19 @@
 package br.com.projetoweb.projeto.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class UsuarioLogadoDTO {
 
     private Integer id;
-    private String email;
     private String nome;
-    private String telefone;
+    
+    @Email(message ="Email inválido.")
+    @NotBlank(message ="Campo email vazio! Validação vinda do BACK-END")
+    private String email;
 
+    @NotBlank(message ="Campo telefone vazio! Validação vinda do BACK-END ")
+    private String telefone;
 
     public UsuarioLogadoDTO(Integer id,String email, String nome, String telefone) {
         this.id = id;

@@ -35,15 +35,33 @@
         <h2><strong>Meu Perfil</strong></h2>
         <form id="formperfil">
             <label for="nome">Nome:</label>
-            <input style="background-color:#F8F9FA;" type="text" id="nome-usuario" name="nome" readonly>
+            <input type="text" id="nome-usuario" name="nome" readonly>
 
             <label for="email">E-mail:</label>
-            <input style="background-color:#F8F9FA;" type="email" id="email-usuario" name="email" readonly>
+            <input  type="email" id="email-usuario" name="email" readonly>
 
             <label for="telefone">Telefone:</label>
-            <input style="background-color:#F8F9FA;" type="tel" id="telefone-usuario" name="telefone" readonly> 
-        </form>
+            <input type="tel" id="telefone-usuario" name="telefone" readonly> 
+  
+            <button type="button" id="editar_dados" class="buttonEdit" style="padding: 10px 20px; display:inline; margin-left: 40%; ">Editar</button>
+            <!-- <button type="button" id="enviar_dados" class="buttonEdit" style="padding: 10px 20px; display:inline;">Enviar</button> -->
+            <a href="#" id="alterar_senha" style="margin-left:38%; text-decoration:underline;">Alterar Senha</a>
+          </form>
     </div>
+
+    <div id="Alterar_senha" class="box" style="display: none;">
+      <h2><strong>Alteração de Senha</strong></h2>
+      <form  id="formperfil">
+          <label for="nome">Senha Atual:</label>
+          <input  type="password" id="senha_atual" name="nome">
+
+          <label for="email">Nova Senha:</label>
+          <input  type="password" id="senha_nova" name="email">
+
+          <button type="button" id="enviar_dados" class="buttonEdit" style="padding: 10px 20px;">Enviar</button>
+        </form>
+  </div>
+
 
     <div id="table-usuarios" style="display:none">
 
@@ -51,9 +69,9 @@
 
     <div id="content-home" class="conteudo" style="display: block;" >
         <h2 style="color:green;">VOCÊ LOGOU NO SISTEMA</h2>
-        <p>Aqui temos por enquanto a opção de ver seu perfil, ver o perfil de todos os outros usuários e sair.
-        Em breve estarei implementando no front-end as outras funções de gerenciamento,
-        Já estão prontas na API.</p>
+        <p>Aqui, atualmente, há a opção de visualizar o seu perfil, visualizar o perfil de outros usuários e sair. Em breve, 
+          estarei implementando as outras funções de gerenciamento no front-end, 
+          embora elas já estejam prontas na API</p>
         <h2>Tecnologias Utilizadas</h2>
         <div style="text-align: center;">
           <img src="assets/icons8-java-48.png" alt="java-icon" >
@@ -88,7 +106,7 @@
         </section>
       </div>
       <div class="text-center p-3" style="background-color:#F8F9FA;">
-        © 2023 Copyright: 😃 no Copyright
+        © 2023 Copyright: 😃
       </div>
     </div>
   </footer>

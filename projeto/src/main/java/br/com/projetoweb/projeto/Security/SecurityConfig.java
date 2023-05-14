@@ -19,8 +19,8 @@ public class SecurityConfig{
         .csrf().disable()
         .authorizeHttpRequests().requestMatchers(HttpMethod.GET,"/swagger-ui/*","/v3/api-docs/*","/v3/api-docs","/swagger-ui.html").permitAll().and()
         // .authorizeHttpRequests().requestMatchers(HttpMethod.DELETE,"/api/usuarios/{id}").permitAll().and()
-        .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/usuarios").permitAll().and()
-        .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/usuarios/login").permitAll()
+        .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/api/usuarios").permitAll().and()
+        .authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/api/usuarios/login").permitAll()
         .anyRequest().authenticated().and().cors();
         http.addFilterBefore(new SecurityFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
